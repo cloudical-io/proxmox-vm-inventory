@@ -3,11 +3,13 @@ package exporter
 import (
 	"crypto/tls"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
+	"time"
 
 	"github.com/charmbracelet/log"
 )
@@ -23,31 +25,47 @@ func init() {
 }
 
 func Exporter(apiURL string, apiKey string) {
-	n := getNodes(apiURL, apiKey)
+	t := time.NewTicker(time.Second * 60)
 
-	list := make([]vm, 3)
+	for {
+		select {
+		case <-t.C:
+			go func() {
+				log.Info("Fetching Inventory...")
 
-	for _, v := range n.Data {
-		r := getVMs(apiURL, apiKey, v.Node)
-		list = append(list, r...)
+				n := getNodes(apiURL, apiKey)
+
+				list := make([]vm, 0)
+
+				for _, v := range n.Data {
+					r := getVMs(apiURL, apiKey, v.Node)
+					list = append(list, r...)
+				}
+
+				log.Debug("Got VM List", "list", list)
+
+				for i, v := range list {
+					vmid := strconv.Itoa(v.Vmid)
+					list[i].Networks = getNetworks(apiURL, apiKey, v.Node, vmid)
+				}
+
+				Inventory = &list
+
+				log.Info("Completed fetching.")
+				log.Debug("Got inventory", "data", Inventory)
+			}()
+		case <-q:
+			log.Info("Caught Shutdown Signal, Terminating...")
+			return
+		}
 	}
-
-	log.Debug("Got VM List", "list", list)
-
-	Inventory = &list
-
-	// t := time.NewTicker(time.Minute * 5)
-
-	// select {
-	// case <-t.C:
-	// 	return //todo
-	// case <-Q:
-	// 	os.Exit(0)
-	// }
 
 }
 
+// general request handler
 func request(url string, key string, path string) []byte {
+	log.Debug("Requesting Proxmox API at", "url", fmt.Sprintf("%s%s", url, path))
+
 	client := &http.Client{
 		Transport: &http.Transport{
 			TLSClientConfig: &tls.Config{
@@ -56,7 +74,6 @@ func request(url string, key string, path string) []byte {
 		},
 	}
 
-	log.Debug("Requesting Proxmox API at", "url", fmt.Sprintf("%s%s", url, path))
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s%s", url, path), nil)
 	if err != nil {
 		log.Error("Could not instanciate http/request", "err", err)
@@ -75,10 +92,11 @@ func request(url string, key string, path string) []byte {
 		log.Error("Proxmox API returned non 200 status code", "status", resp.StatusCode, "message", resp.Status)
 	}
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		log.Error("Mallformed response body", "err", err)
-		return nil
+		log.Debug("Response", "response", resp.Body, "body", body)
+		return []byte{}
 	}
 
 	return body

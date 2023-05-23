@@ -55,7 +55,7 @@ func init() {
 	}
 
 	log.SetLevel(l)
-
+	log.Info("Set debug level to", *logLevel)
 }
 
 func main() {

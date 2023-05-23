@@ -8,23 +8,23 @@ import (
 )
 
 type nodes struct {
-	Data []node `json:data`
+	Data []node `json:"data"`
 }
 
 type node struct {
-	Maxcpu          int     `json:maxcpu`
-	Level           string  `json:level`
-	Mem             int     `json:mem`
-	Uptime          int     `json:uptime`
-	Maxmem          int     `json:maxmem`
-	Status          string  `json:status`
-	Node            string  `json:node`
-	Disk            int     `json:disk`
-	Maxdisk         int     `json:maxdisk`
-	Ssl_fingerprint string  `json:ssl_fingerprint`
-	Cpu             float64 `json:cpu`
-	Node_type       string  `json:type`
-	Id              string  `json:id`
+	Maxcpu          int     `json:"maxcpu,omitempty"`
+	Level           string  `json:"level,omitempty"`
+	Mem             int     `json:"mem,omitempty"`
+	Uptime          int     `json:"uptime,omitempty"`
+	Maxmem          int     `json:"maxmem,omitempty"`
+	Status          string  `json:"status,omitempty"`
+	Node            string  `json:"node,omitempty"`
+	Disk            int     `json:"disk,omitempty"`
+	Maxdisk         int     `json:"maxdisk,omitempty"`
+	Ssl_fingerprint string  `json:"ssl_fingerprint,omitempty"`
+	Cpu             float64 `json:"cpu,omitempty"`
+	Node_type       string  `json:"type,omitempty"`
+	Id              string  `json:"id,omitempty"`
 }
 
 func getNodes(apiURL string, apiKey string) nodes {
@@ -37,7 +37,8 @@ func getNodes(apiURL string, apiKey string) nodes {
 	//unmarshal the json object into struct
 	n := &nodes{}
 	if err := json.Unmarshal(r, n); err != nil {
-		log.Warn("Could not Unmarshal json", "err", err)
+		log.Error("Could not Unmarshal json", "err", err)
+		return nodes{}
 	}
 
 	return *n
