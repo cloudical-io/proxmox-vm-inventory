@@ -2,6 +2,7 @@ package exporter
 
 import (
 	"crypto/tls"
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -25,7 +26,7 @@ func init() {
 }
 
 func Exporter(apiURL string, apiKey string) {
-	t := time.NewTicker(time.Second * 60)
+	t := time.NewTicker(time.Second * 6)
 
 	for {
 		select {
@@ -51,8 +52,10 @@ func Exporter(apiURL string, apiKey string) {
 
 				Inventory = &list
 
+				j, _ := json.Marshal(Inventory)
+
 				log.Info("Completed fetching.")
-				log.Debug("Got inventory", "data", Inventory)
+				log.Info("Got inventory", "json", string(j))
 			}()
 		case <-q:
 			log.Info("Caught Shutdown Signal, Terminating...")
