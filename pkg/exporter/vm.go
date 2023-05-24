@@ -30,21 +30,23 @@ type vm struct {
 }
 
 // get vm list
-func getVMs(apiURL string, apiKey string, node string) []vm {
+func getVMs(apiURL string, apiKey string, node string) ([]vm, error) {
 
-	r := request(apiURL, apiKey, fmt.Sprint(apiPrefix+"nodes/"+node+"/qemu"))
+	r, err := request(apiURL, apiKey, fmt.Sprint(apiPrefix+"nodes/"+node+"/qemu"))
+	if err != nil {
+		return nil, err
+	}
 
 	log.Debug("Proxmox API returned json", "json", fmt.Sprintf("%v", string(r)))
 
 	v := &vms{}
 	if err := json.Unmarshal(r, v); err != nil {
-		log.Error("Could not Unmarshal json", "err", err)
-		return []vm{}
+		return nil, fmt.Errorf("Could not Unmarshal json %s", err)
 	}
 
 	for i := range v.Data {
 		v.Data[i].Node = node
 	}
 
-	return v.Data
+	return v.Data, nil
 }

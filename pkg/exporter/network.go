@@ -15,16 +15,18 @@ type Vmdata struct {
 }
 
 // get network config of a specific VM
-func getNetworks(apiURL string, apiKey string, node string, vmid string) networkconfig {
+func getNetworks(apiURL string, apiKey string, node string, vmid string) (networkconfig, error) {
 
-	r := request(apiURL, apiKey, fmt.Sprint(apiPrefix+"nodes/"+node+"/qemu/"+vmid+"/config"))
+	r, err := request(apiURL, apiKey, fmt.Sprint(apiPrefix+"nodes/"+node+"/qemu/"+vmid+"/config"))
+	if err != nil {
+		return networkconfig{}, err
+	}
 
 	log.Debug("Proxmox API returned json", "json", fmt.Sprintf("%v", string(r)))
 
 	var d Vmdata
 	if err := json.Unmarshal(r, &d); err != nil {
-		log.Error("Could not Unmarshal json", "err", err)
-		return networkconfig{}
+		return networkconfig{}, fmt.Errorf("could not Unmarshal json %s", err)
 	}
 
 	var nc networkconfig
@@ -39,5 +41,5 @@ func getNetworks(apiURL string, apiKey string, node string, vmid string) network
 
 	log.Debug("Network Devices found", "list", nc)
 
-	return nc
+	return nc, nil
 }

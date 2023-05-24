@@ -8,38 +8,44 @@ import (
 )
 
 type nodes struct {
-	Data []node `json:"data"`
+	Data []Node `json:"data"`
 }
 
-type node struct {
+type Node struct {
+	Id              string  `json:"id"`
+	Node            string  `json:"node"`
+	Node_type       string  `json:"type,omitempty"`
 	Maxcpu          int     `json:"maxcpu,omitempty"`
 	Level           string  `json:"level,omitempty"`
 	Mem             int     `json:"mem,omitempty"`
 	Uptime          int     `json:"uptime,omitempty"`
 	Maxmem          int     `json:"maxmem,omitempty"`
 	Status          string  `json:"status,omitempty"`
-	Node            string  `json:"node,omitempty"`
 	Disk            int     `json:"disk,omitempty"`
 	Maxdisk         int     `json:"maxdisk,omitempty"`
 	Ssl_fingerprint string  `json:"ssl_fingerprint,omitempty"`
 	Cpu             float64 `json:"cpu,omitempty"`
-	Node_type       string  `json:"type,omitempty"`
-	Id              string  `json:"id,omitempty"`
 }
 
-func getNodes(apiURL string, apiKey string) nodes {
+// retrieves the node list from a Proxmox Cluster
+//
+// returns a struct from type Node.
+// On error returns the message and an empty struct.
+func getNodes(apiURL string, apiKey string) (nodes, error) {
 
 	//get the nodes in cluster
-	r := request(apiURL, apiKey, fmt.Sprint(apiPrefix+"nodes"))
+	r, err := request(apiURL, apiKey, fmt.Sprint(apiPrefix+"nodes"))
+	if err != nil {
+		return nodes{}, err
+	}
 
 	log.Debug("Proxmox API returned json", "json", fmt.Sprintf("%v", string(r)))
 
 	//unmarshal the json object into struct
 	n := &nodes{}
 	if err := json.Unmarshal(r, n); err != nil {
-		log.Error("Could not Unmarshal json", "err", err)
-		return nodes{}
+		return nodes{}, fmt.Errorf("could not unmarshal json %s", err)
 	}
 
-	return *n
+	return *n, nil
 }
