@@ -8,38 +8,37 @@ import (
 	"github.com/charmbracelet/log"
 )
 
-type networkconfig []string
+type networkConfig []string
 
-type Vmdata struct {
+type VmData struct {
 	Data map[string]interface{} `json:"data"`
 }
 
 // get network config of a specific VM
-func getNetworks(apiURL string, apiKey string, node string, vmid string) (networkconfig, error) {
+func getNetworks(apiURL string, apiKey string, node string, vmid string) (networkConfig, error) {
 
 	r, err := request(apiURL, apiKey, fmt.Sprint(apiPrefix+"nodes/"+node+"/qemu/"+vmid+"/config"))
 	if err != nil {
-		return networkconfig{}, err
+		return networkConfig{}, err
 	}
 
-	log.Debug("Proxmox API returned json", "json", fmt.Sprintf("%v", string(r)))
+	log.Debug("proxmox API returned json", "json", fmt.Sprintf("%v", string(r)))
 
-	var d Vmdata
-	if err := json.Unmarshal(r, &d); err != nil {
-		return networkconfig{}, fmt.Errorf("could not Unmarshal json %s", err)
+	var vmData VmData
+	if err := json.Unmarshal(r, &vmData); err != nil {
+		return networkConfig{}, err
 	}
 
-	var nc networkconfig
-
-	for k, v := range d.Data {
+	var networkConfig networkConfig
+	for k, v := range vmData.Data {
 		if strings.Contains(k, "ipconfig") {
-			if v2, ok := v.(string); ok {
-				nc = append(nc, v2)
+			if s, ok := v.(string); ok {
+				networkConfig = append(networkConfig, s)
 			}
 		}
 	}
 
-	log.Debug("Network Devices found", "list", nc)
+	log.Debug("network Devices found", "list", networkConfig)
 
-	return nc, nil
+	return networkConfig, nil
 }

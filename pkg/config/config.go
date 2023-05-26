@@ -12,11 +12,13 @@ import (
 )
 
 type Config struct {
-	Clusters      []Cluster `mapstructure:"clusters"`
-	FetchInterval int       `mapstructure:"fetchInterval"`
+	RequestTimeout int       `mapstructure:"timeout"`
+	FetchInterval  int       `mapstructure:"fetchInterval"`
+	Clusters       []Cluster `mapstructure:"clusters"`
 }
 
 type Cluster struct {
+	Name    string `mapstructure:"name"`
 	ApiKey  string `mapstructure:"apikey"`
 	ApiUser string `mapstructure:"apiuser"`
 	ApiHost string `mapstructure:"apihost"`
@@ -25,21 +27,28 @@ type Cluster struct {
 // variables to be parsed
 var (
 	filePath = kingpin.
-			Flag("cluster-file", "API Key").
+			Flag("config-file", "YAML file containing your config values. Values set here override all commandline flags and environment vars").
 			Short('f').
 			Required().
-			Envar("CLUSTER_FILE").
+			Envar("INV_CLUSTER_FILE").
 			String()
 	logLevel = kingpin.
 			Flag("log-level", "Set the Log Level / verbosity").
 			Short('l').
-			Envar("LOG_LEVEL").
+			Envar("INV_LOG_LEVEL").
 			Default("INFO").
 			Enum("DEBUG", "INFO", "WARN", "ERROR", "FATAL")
+	requestTimeout = kingpin.
+			Flag("timeout", "Time in seconds before a request times out").
+			Short('t').
+			Default("10").
+			Envar("INV_TIMEOUT").
+			Int()
 	fetchInterval = kingpin.
 			Flag("fetch-interval", "Interval at whicht to refetch all VMs").
 			Short('i').
 			Default("300").
+			Envar("INV_INTERVAL").
 			Int()
 )
 
@@ -47,17 +56,15 @@ func init() {
 	kingpin.Parse()
 
 	s := strings.ToLower(*logLevel)
-
 	l := log.ParseLevel(s)
-
 	log.SetLevel(l)
-
 	log.Info("log level", "level", log.GetLevel().String())
 }
 
 func New() *Config {
 	c := &Config{
-		FetchInterval: *fetchInterval,
+		FetchInterval:  *fetchInterval,
+		RequestTimeout: *requestTimeout,
 	}
 
 	f, err := os.Open(*filePath)

@@ -1,0 +1,18 @@
+# -- Timeout in seconds
+timeout: 10
+# -- Time until the next fetch
+fetchInterval: 300
+# -- Cluster list to fetch info from
+clusters:
+  - # Name must be unique
+    name: "CUSTOM CLUSTER NAME"
+    # API key for the proxmox cluster
+    apikey: "aaaaaaaaa-bbb-cccc-dddd-ef0123456789"
+    # API user
+    apiuser: "root@pam!monitoring"
+    # API URL
+    apihost: "https://10.0.0.1:8006"
+  # - name: "CUSTOM CLUSTER NAME 2" #must be unique
+  #   apikey: "aaaaaaaaa-bbb-cccc-dddd-ef0123456789"
+  #   apiuser: "root@pam!monitoring"
+  #   apihost: "https://10.0.0.2:8006"

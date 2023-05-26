@@ -26,7 +26,7 @@ type vm struct {
 	Runningqemu    string        `json:"running-qemu,omitempty"`
 	Tags           string        `json:"tags,omitempty"`
 	Uptime         int           `json:"uptime,omitempty"`
-	Networks       networkconfig `json:"ipconfigs"`
+	Networks       networkConfig `json:"ipconfigs"`
 }
 
 // get vm list
@@ -41,7 +41,7 @@ func getVMs(apiURL string, apiKey string, node string) ([]vm, error) {
 
 	v := &vms{}
 	if err := json.Unmarshal(r, v); err != nil {
-		return nil, fmt.Errorf("Could not Unmarshal json %s", err)
+		return nil, err
 	}
 
 	for i := range v.Data {
