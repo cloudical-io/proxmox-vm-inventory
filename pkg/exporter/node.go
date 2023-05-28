@@ -31,10 +31,10 @@ type Node struct {
 //
 // returns a struct from type Node.
 // On error returns the message and an empty struct.
-func getNodes(apiURL string, apiKey string) (nodes, error) {
+func getNodes(apiURL string, apiKey string, timeout int) (nodes, error) {
 
 	//get the nodes in cluster
-	r, err := request(apiURL, apiKey, fmt.Sprint(apiPrefix+"nodes"))
+	r, err := request(apiURL, apiKey, fmt.Sprint(apiPrefix+"nodes"), timeout)
 	if err != nil {
 		return nodes{}, err
 	}

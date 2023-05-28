@@ -15,6 +15,7 @@ func Run() {
 
 	// default handler
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		log.Info("Got HTTP request", "path", r.RequestURI, "origin", r.RemoteAddr, "method", r.Method)
 		w.WriteHeader(http.StatusNotImplemented)
 		w.Write([]byte(""))
 	})
@@ -22,6 +23,7 @@ func Run() {
 	// endpoints
 	http.HandleFunc("/all", inventoryAll)
 	http.HandleFunc("/cluster", inventoryCluster)
+	http.HandleFunc("/cluster/", inventoryCluster)
 
 	if err := s.ListenAndServe(); err != nil {
 		log.Error("http serve error", "err", err)
@@ -52,7 +54,7 @@ func inventoryCluster(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method != http.MethodPost {
 		w.WriteHeader(http.StatusNotImplemented)
-		w.Write([]byte("Try POST your data with the 'cluster=<ClusterURL>' field set"))
+		w.Write([]byte("Try to POST your data with the 'cluster=<ClusterURL>' form-field set"))
 		return
 	}
 

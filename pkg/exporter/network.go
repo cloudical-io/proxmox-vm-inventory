@@ -15,9 +15,9 @@ type VmData struct {
 }
 
 // get network config of a specific VM
-func getNetworks(apiURL string, apiKey string, node string, vmid string) (networkConfig, error) {
+func getNetworks(apiURL string, apiKey string, node string, vmid string, timeout int) (networkConfig, error) {
 
-	r, err := request(apiURL, apiKey, fmt.Sprint(apiPrefix+"nodes/"+node+"/qemu/"+vmid+"/config"))
+	r, err := request(apiURL, apiKey, fmt.Sprint(apiPrefix+"nodes/"+node+"/qemu/"+vmid+"/config"), timeout)
 	if err != nil {
 		return networkConfig{}, err
 	}

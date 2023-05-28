@@ -30,9 +30,9 @@ type vm struct {
 }
 
 // get vm list
-func getVMs(apiURL string, apiKey string, node string) ([]vm, error) {
+func getVMs(apiURL string, apiKey string, node string, timeout int) ([]vm, error) {
 
-	r, err := request(apiURL, apiKey, fmt.Sprint(apiPrefix+"nodes/"+node+"/qemu"))
+	r, err := request(apiURL, apiKey, fmt.Sprint(apiPrefix+"nodes/"+node+"/qemu"), timeout)
 	if err != nil {
 		return nil, err
 	}

@@ -15,7 +15,7 @@ var (
 )
 
 // general request handler
-func request(url string, key string, path string) ([]byte, error) {
+func request(url string, key string, path string, timeout int) ([]byte, error) {
 	log.Debug("Requesting Proxmox API at", "url", fmt.Sprintf("%s%s", url, path))
 
 	client := &http.Client{
@@ -24,7 +24,7 @@ func request(url string, key string, path string) ([]byte, error) {
 				InsecureSkipVerify: true,
 			},
 		},
-		Timeout: time.Second * 10,
+		Timeout: time.Second * time.Duration(timeout),
 	}
 
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s%s", url, path), nil)

@@ -42,12 +42,12 @@ func (i *Inventory) GetClusterVM(s string) []vm {
 }
 
 // Takes a Cluster config object to generate a new VM List for given cluster
-func createInventory(c config.Cluster) {
+func (i *Inventory) createInventory(c config.Cluster, timeout int) {
 	log.Info("Fetching Inventory...")
 
 	apiKey := fmt.Sprintf("%s=%s", c.ApiUser, c.ApiKey)
 
-	n, err := getNodes(c.ApiHost, apiKey)
+	n, err := getNodes(c.ApiHost, apiKey, timeout)
 	if err != nil {
 		log.Warn("could not get nodes", "host", c.ApiHost)
 		return
@@ -56,7 +56,7 @@ func createInventory(c config.Cluster) {
 	list := make([]vm, 0)
 
 	for _, v := range n.Data {
-		if r, err := getVMs(c.ApiHost, apiKey, v.Node); err != nil {
+		if r, err := getVMs(c.ApiHost, apiKey, v.Node, timeout); err != nil {
 			log.Warn("could not get nodes on node", "node", v.Node)
 		} else {
 			list = append(list, r...)
@@ -67,14 +67,14 @@ func createInventory(c config.Cluster) {
 
 	for i, v := range list {
 		vmid := strconv.Itoa(v.Vmid)
-		list[i].Networks, err = getNetworks(c.ApiHost, apiKey, v.Node, vmid)
+		list[i].Networks, err = getNetworks(c.ApiHost, apiKey, v.Node, vmid, timeout)
 		if err != nil {
 			log.Warn("could not get network for vm", "vmid", vmid)
 			log.Debug("error", "err", err)
 		}
 	}
 
-	Inv.AddList(c.Name, &list)
+	i.AddList(c.Name, &list)
 
 	log.Info("Completed fetching.")
 }
