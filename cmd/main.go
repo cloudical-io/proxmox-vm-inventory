@@ -20,7 +20,7 @@ func main() {
 
 	c := config.New()
 
-	go web.Run()
+	go web.Run(c.HttpListenAddress)
 
 	go exporter.Run(*c)
 

@@ -8,9 +8,9 @@ import (
 	"github.com/charmbracelet/log"
 )
 
-func Run() {
+func Run(address string) {
 	s := &http.Server{
-		Addr: ":8080",
+		Addr: address,
 	}
 
 	// default handler
@@ -38,6 +38,7 @@ func inventoryAll(w http.ResponseWriter, r *http.Request) {
 
 	// marshal the struct to JSON
 	if j, err := json.Marshal(l); err != nil {
+		log.Error("weg.go", "err", err)
 		w.WriteHeader(http.StatusInternalServerError)
 	} else {
 		w.Header().Add("Content-Type", "application/json")
@@ -67,6 +68,7 @@ func inventoryCluster(w http.ResponseWriter, r *http.Request) {
 
 	// marshal the struct to JSON
 	if j, err := json.Marshal(l); err != nil {
+		log.Error("weg.go", "err", err)
 		w.WriteHeader(http.StatusInternalServerError)
 	} else {
 		w.Header().Add("Content-Type", "application/json")

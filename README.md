@@ -57,10 +57,11 @@ Note that the Config File always has to be specified.
 
 |Flag | Long Flag | Default Value | ENV_VAR | Usage
 |--|--|--|--|--|
-|-f|--config-file||INV_CLUSTER_FILE|YAML file containing your config values. Values set here override all commandline flags and environment vars|
-|-l|--log-level|INFO|INV_LOG_LEVEL|Set the Log Level / verbosity|
-|-t|--timeout|10|INV_TIMEOUT|Time in seconds before a request times out|
-|-i|--fetch-interval|300|INV_INTERVAL|Interval at whicht to refetch all VMs|
+|-f|--config-file|`-`|INV_CONFIG_FILE|YAML file containing your config values. Values set here override all commandline flags and environment vars|
+|-l|--listen-address|`:8080`|INV_HTTP_LISTEN|The http port to listen on|
+|-L|--log-level|`INFO`|INV_LOG_LEVEL|Set the Log Level / verbosity|
+|-t|--timeout|`10`|INV_TIMEOUT|Time in seconds before a request times out|
+|-i|--fetch-interval|`300`|INV_INTERVAL|Interval at whicht to refetch all VMs|
 
 ## Build Instructions
 

@@ -12,9 +12,10 @@ import (
 )
 
 type Config struct {
-	RequestTimeout int       `mapstructure:"timeout"`
-	FetchInterval  int       `mapstructure:"fetchInterval"`
-	Clusters       []Cluster `mapstructure:"clusters"`
+	RequestTimeout    int       `mapstructure:"timeout"`
+	FetchInterval     int       `mapstructure:"fetchInterval"`
+	Clusters          []Cluster `mapstructure:"clusters"`
+	HttpListenAddress string    `mapstructure:"httpAddress"`
 }
 
 type Cluster struct {
@@ -30,11 +31,11 @@ var (
 			Flag("config-file", "YAML file containing your config values. Values set here override all commandline flags and environment vars").
 			Short('f').
 			Required().
-			Envar("INV_CLUSTER_FILE").
+			Envar("INV_CONFIG_FILE").
 			String()
 	logLevel = kingpin.
 			Flag("log-level", "Set the Log Level / verbosity").
-			Short('l').
+			Short('L').
 			Envar("INV_LOG_LEVEL").
 			Default("INFO").
 			Enum("DEBUG", "INFO", "WARN", "ERROR", "FATAL")
@@ -50,6 +51,13 @@ var (
 			Default("300").
 			Envar("INV_INTERVAL").
 			Int()
+	httpListenAddress = kingpin.
+				Flag("listen-address", "The http port to listen on").
+				HintOptions(":8080", "127.0.0.1:8080", "[::]:8080").
+				Default(":8080").
+				Short('l').
+				Envar("INV_HTTP_LISTEN").
+				String()
 )
 
 func init() {
@@ -63,8 +71,9 @@ func init() {
 
 func New() *Config {
 	c := &Config{
-		FetchInterval:  *fetchInterval,
-		RequestTimeout: *requestTimeout,
+		FetchInterval:     *fetchInterval,
+		RequestTimeout:    *requestTimeout,
+		HttpListenAddress: *httpListenAddress,
 	}
 
 	f, err := os.Open(*filePath)
