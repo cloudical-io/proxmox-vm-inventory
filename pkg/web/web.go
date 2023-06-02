@@ -17,7 +17,7 @@ func Run(address string) {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		log.Info("Got HTTP request", "path", r.RequestURI, "origin", r.RemoteAddr, "method", r.Method)
 		w.WriteHeader(http.StatusNotImplemented)
-		w.Write([]byte(""))
+		w.Write([]byte("Not Implemented"))
 	})
 
 	// endpoints
@@ -38,7 +38,7 @@ func inventoryAll(w http.ResponseWriter, r *http.Request) {
 
 	// marshal the struct to JSON
 	if j, err := json.Marshal(l); err != nil {
-		log.Error("weg.go", "err", err)
+		log.Error("web.go", "err", err)
 		w.WriteHeader(http.StatusInternalServerError)
 	} else {
 		w.Header().Add("Content-Type", "application/json")
