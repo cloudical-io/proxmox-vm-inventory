@@ -5,3 +5,4 @@ build/
 !example.yaml
 *.yaml
 *.yml
+__debug_bin
