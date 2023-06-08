@@ -1,3 +1,10 @@
+## [1.0.1-dev.2](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/compare/v1.0.1-dev.1...v1.0.1-dev.2) (2023-06-08)
+
+
+### Bug Fixes
+
+* config initialization ([7d09395](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/commit/7d09395d7284b7b68da0ce4b60b8e5ec8d098c33))
+
 ## [1.0.1-dev.1](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/compare/v1.0.0...v1.0.1-dev.1) (2023-06-08)
 
 
