@@ -6,7 +6,10 @@ static code check:
   stage: test
   image: devdrops/staticcheck:latest
   script:
-    - staticcheck
+    - staticcheck cmd/
+    - staticcheck pkg/exporter/
+    - staticcheck pkg/config/
+    - staticcheck pkg/web/
   allow_failure: true
 
 release:
