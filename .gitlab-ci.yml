@@ -1,7 +1,10 @@
 stages:
+  - images
   - test
   - release
 
+# static check code in merge requests
+# fails when code is not ok - you'll have to explicitly ignore a check if you know what you are doing
 static code check:
   stage: test
   image: devdrops/staticcheck:latest
@@ -10,18 +13,18 @@ static code check:
     - staticcheck $CI_PROJECT_DIR/pkg/exporter/
     - staticcheck $CI_PROJECT_DIR/pkg/config/
     - staticcheck $CI_PROJECT_DIR/pkg/web/
-  allow_failure: true
+  only:
+    refs:
+      - "merge_requests"
 
 release:
-  image: node:18-buster-slim
+  image: harbor.cloudical.net/cci-tools/semantic-release@sha256:ea1ddb8336492f644e2ce204652811383518695bda90816615b75872e4c7f35c
   stage: release
-  before_script:
-    - apt-get update && apt-get install -y --no-install-recommends git-core ca-certificates
-    - npm install -g semantic-release @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/changelog @semantic-release/git
   script:
     - semantic-release
   only:
     - main
+    - dev
   except:
     changes:
       - "CHANGELOG.md"
