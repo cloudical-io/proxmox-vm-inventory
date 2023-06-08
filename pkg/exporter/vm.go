@@ -8,10 +8,10 @@ import (
 )
 
 type vms struct {
-	Data []vm `jason:"data"`
+	Data []Vm `jason:"data"`
 }
 
-type vm struct {
+type Vm struct {
 	Node           string        `json:"node"`
 	Status         string        `json:"status,omitempty"`
 	Vmid           int           `json:"vmid"`
@@ -30,7 +30,7 @@ type vm struct {
 }
 
 // get vm list
-func getVMs(apiURL string, apiKey string, node string, timeout int) ([]vm, error) {
+func getVMs(apiURL string, apiKey string, node string, timeout int) ([]Vm, error) {
 
 	r, err := request(apiURL, apiKey, fmt.Sprint(apiPrefix+"nodes/"+node+"/qemu"), timeout)
 	if err != nil {

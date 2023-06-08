@@ -10,7 +10,7 @@ var (
 )
 
 func Run(conf config.Config) {
-	Inv.inventory = make(map[string]*[]vm, 0)
+	Inv.inventory = make(map[string]*[]Vm, 0)
 
 	t := time.NewTicker(time.Second * time.Duration(conf.FetchInterval))
 	for {

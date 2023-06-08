@@ -14,23 +14,23 @@ import (
 // to access the content use the given methods
 // since concurrency problems might appear if you do otherwise
 type Inventory struct {
-	inventory map[string]*[]vm
+	inventory map[string]*[]Vm
 	mu        sync.Mutex
 }
 
-func (i *Inventory) AddList(key string, vms *[]vm) {
+func (i *Inventory) AddList(key string, vms *[]Vm) {
 	i.mu.Lock()
 	defer i.mu.Unlock()
 	i.inventory[key] = vms
 }
 
-func (i *Inventory) GetList() map[string]*[]vm {
+func (i *Inventory) GetList() map[string]*[]Vm {
 	i.mu.Lock()
 	defer i.mu.Unlock()
 	return i.inventory
 }
 
-func (i *Inventory) GetClusterVM(s string) []vm {
+func (i *Inventory) GetClusterVM(s string) []Vm {
 	i.mu.Lock()
 	defer i.mu.Unlock()
 
@@ -53,7 +53,7 @@ func (i *Inventory) createInventory(c config.Cluster, timeout int) {
 		return
 	}
 
-	list := make([]vm, 0)
+	list := make([]Vm, 0)
 
 	for _, v := range n.Data {
 		if r, err := getVMs(c.ApiHost, apiKey, v.Node, timeout); err != nil {
