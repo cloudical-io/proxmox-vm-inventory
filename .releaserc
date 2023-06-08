@@ -2,7 +2,7 @@
     "name": "proxmox-vm-inventory",
     "private": true,
     "branches": [
-        "ci"
+        "main"
     ],
     "plugins": [
         "@semantic-release/commit-analyzer",

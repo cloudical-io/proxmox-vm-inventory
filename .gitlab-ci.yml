@@ -21,7 +21,7 @@ release:
   script:
     - semantic-release
   only:
-    - ci
+    - main
   except:
     changes:
       - "CHANGELOG.md"
