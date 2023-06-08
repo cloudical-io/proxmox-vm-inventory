@@ -2,7 +2,11 @@
     "name": "proxmox-vm-inventory",
     "private": true,
     "branches": [
-        "main"
+        "main",
+        {
+            "name": "dev",
+            "prerelease": true
+        }
     ],
     "plugins": [
         "@semantic-release/commit-analyzer",
@@ -20,7 +24,7 @@
                     "CHANGELOG.md",
                     "package.json"
                 ],
-                "message": "chore(release): ${nextRelease.version} \n\n${nextRelease.notes}"
+                "message": "release: ${nextRelease.version} \n\n${nextRelease.notes}"
             }
         ]
     ]
