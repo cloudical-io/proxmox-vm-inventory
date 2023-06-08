@@ -22,12 +22,10 @@ release:
   stage: release
   script:
     - semantic-release
-  only:
-    - main
-    - dev
-  except:
-    changes:
-      - "CHANGELOG.md"
+  rules:
+    - if: ($CI_COMMIT_BRANCH == "dev" || if $CI_COMMIT_BRANCH == "main")
+      changes:
+        - "!CHANGELOG.md"
 
 # only builds on tag creation
 build binary:
