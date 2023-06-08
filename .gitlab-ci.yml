@@ -18,7 +18,7 @@ release:
   script:
     - semantic-release
   only:
-    - YOUR_RELEASE_BRANCHES
+    - ci
   except:
     changes:
       - "CHANGELOG.md"
