@@ -1,0 +1,47 @@
+stages:
+  - test
+  - release
+
+# static check code in merge requests
+# fails when code is not ok - you'll have to explicitly ignore a check if you know what you are doing
+static code check:
+  stage: test
+  image: devdrops/staticcheck:latest
+  script:
+    - staticcheck $CI_PROJECT_DIR/cmd/
+    - staticcheck $CI_PROJECT_DIR/pkg/exporter/
+    - staticcheck $CI_PROJECT_DIR/pkg/config/
+    - staticcheck $CI_PROJECT_DIR/pkg/web/
+  only:
+    refs:
+      - "merge_requests"
+
+release:
+  image: harbor.cloudical.net/cci-tools/semantic-release@sha256:ea1ddb8336492f644e2ce204652811383518695bda90816615b75872e4c7f35c
+  stage: release
+  script:
+    - semantic-release
+  only:
+    - main
+    - dev
+  except:
+    changes:
+      - "CHANGELOG.md"
+
+# only builds on tag creation
+build binary:
+  image: golang:1.20
+  stage: release
+  script:
+    - CGO_ENABLED=0 go mod download
+    - CGO_ENABLED=0 go build -o pveinventory-$CI_COMMIT_TAG cmd/main.go
+  only:
+    - tags
+  except:
+    - branches
+  artifacts:
+    untracked: false
+    when: on_success
+    expire_in: "30 days"
+    paths:
+      - ./pveinventory-*
