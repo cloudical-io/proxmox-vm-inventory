@@ -6,10 +6,10 @@ static code check:
   stage: test
   image: devdrops/staticcheck:latest
   script:
-    - staticcheck cmd/
-    - staticcheck pkg/exporter/
-    - staticcheck pkg/config/
-    - staticcheck pkg/web/
+    - staticcheck $CI_PROJECT_DIR/cmd/
+    - staticcheck $CI_PROJECT_DIR/pkg/exporter/
+    - staticcheck $CI_PROJECT_DIR/pkg/config/
+    - staticcheck $CI_PROJECT_DIR/pkg/web/
   allow_failure: true
 
 release:
