@@ -13,9 +13,9 @@ static code check:
     - staticcheck $CI_PROJECT_DIR/pkg/exporter/
     - staticcheck $CI_PROJECT_DIR/pkg/config/
     - staticcheck $CI_PROJECT_DIR/pkg/web/
-  only:
+  except:
     refs:
-      - "merge_requests"
+      - tags
 
 release:
   image: harbor.cloudical.net/cci-tools/semantic-release@sha256:ea1ddb8336492f644e2ce204652811383518695bda90816615b75872e4c7f35c
@@ -23,7 +23,7 @@ release:
   script:
     - semantic-release
   rules:
-    - if: $CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main"
+    - if: $CI_COMMIT_BRANCH == "main"
     - changes:
         paths:
           - "CHANGELOG.md"
