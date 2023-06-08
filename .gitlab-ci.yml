@@ -24,9 +24,10 @@ release:
     - semantic-release
   rules:
     - if: ($CI_COMMIT_BRANCH == "dev" || if $CI_COMMIT_BRANCH == "main")
-      changes:
+    - changes:
         paths:
-          - "!CHANGELOG.md"
+          - "CHANGELOG.md"
+      when: never
 
 # only builds on tag creation
 build binary:
