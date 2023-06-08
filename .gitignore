@@ -2,7 +2,8 @@
 main
 build/
 .env
-!example.yaml
 *.yaml
 *.yml
+!example.yaml
+!.gitlab-ci.yml
 __debug_bin
