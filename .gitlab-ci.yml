@@ -25,7 +25,8 @@ release:
   rules:
     - if: ($CI_COMMIT_BRANCH == "dev" || if $CI_COMMIT_BRANCH == "main")
       changes:
-        - "!CHANGELOG.md"
+        paths:
+          - "!CHANGELOG.md"
 
 # only builds on tag creation
 build binary:
