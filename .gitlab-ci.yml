@@ -1,5 +1,4 @@
 stages:
-  - images
   - test
   - release
 
