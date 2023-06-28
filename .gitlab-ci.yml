@@ -18,7 +18,7 @@ static code check:
       - tags
 
 release:
-  image: harbor.cloudical.net/cci-tools/semantic-release@sha256:ea1ddb8336492f644e2ce204652811383518695bda90816615b75872e4c7f35c
+  image: harbor.cloudical.net/cci-tools/semantic-release@sha256:3c237539f069b3ed5a863f9d02682ca5844a4c5cb3c1e2629043c33c56b93c6d
   stage: release
   script:
     - semantic-release
