@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/cloudical-io/proxmox-vm-inventory/pkg/config"
+	//"github.com/cloudical-io/proxmox-vm-inventory/pkg/config"
 	"github.com/cloudical-io/proxmox-vm-inventory/pkg/exporter"
 
 	"github.com/charmbracelet/log"
