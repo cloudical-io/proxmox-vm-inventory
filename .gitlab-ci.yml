@@ -23,7 +23,8 @@ release:
   script:
     - semantic-release
   rules:
-    - if: $CI_COMMIT_BRANCH == "main"
+    - if: $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "dev"
+      when: always
     - changes:
         paths:
           - "CHANGELOG.md"
