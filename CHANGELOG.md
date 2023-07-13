@@ -1,3 +1,15 @@
+# [1.1.0-rc.1](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/compare/v1.0.1...v1.1.0-rc.1) (2023-07-13)
+
+
+### Bug Fixes
+
+* **web:** commented out unused code ([0504e59](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/commit/0504e59cf45e20e9927e62566d6f853635484a67))
+
+
+### Features
+
+* **web:** add a basic web interface ([295ff2c](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/commit/295ff2c6189aeac93e12a5440efb793d5770ab70))
+
 ## [1.0.1](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/compare/v1.0.0...v1.0.1) (2023-06-08)
 
 
