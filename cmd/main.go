@@ -3,10 +3,11 @@ package main
 import (
 	"os"
 	"os/signal"
-	"proxmox-vm-inventory/pkg/config"
-	"proxmox-vm-inventory/pkg/exporter"
-	"proxmox-vm-inventory/pkg/web"
 	"syscall"
+
+	"github.com/cloudical-io/proxmox-vm-inventory/pkg/config"
+	"github.com/cloudical-io/proxmox-vm-inventory/pkg/exporter"
+	"github.com/cloudical-io/proxmox-vm-inventory/pkg/web"
 
 	"github.com/charmbracelet/log"
 )
@@ -20,7 +21,7 @@ func main() {
 
 	c := config.New()
 
-	go web.Run(c.HttpListenAddress)
+	go web.Run(*c.HttpListenAddress)
 
 	go exporter.Run(*c)
 

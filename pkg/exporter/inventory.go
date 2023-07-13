@@ -2,9 +2,10 @@ package exporter
 
 import (
 	"fmt"
-	"proxmox-vm-inventory/pkg/config"
 	"strconv"
 	"sync"
+
+	"github.com/cloudical-io/proxmox-vm-inventory/pkg/config"
 
 	"github.com/charmbracelet/log"
 )

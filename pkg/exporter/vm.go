@@ -26,7 +26,7 @@ type Vm struct {
 	Runningqemu    string        `json:"running-qemu,omitempty"`
 	Tags           string        `json:"tags,omitempty"`
 	Uptime         int           `json:"uptime,omitempty"`
-	Networks       networkConfig `json:"ipconfigs"`
+	Networks       NetworkConfig `json:"ipconfigs"`
 }
 
 // get vm list

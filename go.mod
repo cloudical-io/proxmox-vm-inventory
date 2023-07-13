@@ -1,4 +1,4 @@
-module proxmox-vm-inventory
+module github.com/cloudical-io/proxmox-vm-inventory
 
 go 1.20
 
@@ -22,6 +22,4 @@ require (
 	github.com/rivo/uniseg v0.4.4 // indirect
 	github.com/xhit/go-str2duration/v2 v2.1.0 // indirect
 	golang.org/x/sys v0.8.0 // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
-	sigs.k8s.io/yaml v1.3.0 // indirect
 )

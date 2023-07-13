@@ -1,0 +1,11 @@
+{
+    "ansible.python.interpreterPath": "/bin/python",
+    "cSpell.words": [
+        "apihost",
+        "apiuser",
+        "commandline",
+        "Envar",
+        "loglevel",
+        "mapstructure"
+    ]
+}
