@@ -12,6 +12,7 @@ import (
 
 // unused can be used later for advanced querries
 // returns a list of Proxmox Clusters being Scraped
+/*
 func clusterList(w http.ResponseWriter, r *http.Request) {
 	log.Info("Got HTTP request", "path", r.RequestURI, "origin", r.RemoteAddr, "method", r.Method)
 	l := config.ClusterList()
@@ -25,6 +26,7 @@ func clusterList(w http.ResponseWriter, r *http.Request) {
 		w.Write(j)
 	}
 }
+*/
 
 // retrieves the list of all environments
 func inventoryAll(w http.ResponseWriter, r *http.Request) {
