@@ -1,4 +1,4 @@
-FROM golang:1.20
+FROM golang:1.20 AS build
 
 WORKDIR /build
 
@@ -8,4 +8,12 @@ RUN CGO_ENABLED=0 go mod download
 
 RUN CGO_ENABLED=0 go build -o pveinventory cmd/main.go
 
-ENTRYPOINT ["./pveinventory"]
+FROM scratch AS release
+
+USER 10001
+WORKDIR /app
+
+COPY --from=build /build/pveinventory /app/pveinventory
+
+ENTRYPOINT ["/app/pveinventory"]
+CMD ["-f", "/app/MY_CONFIG.yaml"]
