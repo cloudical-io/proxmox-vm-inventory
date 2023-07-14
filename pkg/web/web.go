@@ -3,32 +3,30 @@ package web
 import (
 	"encoding/json"
 	"net/http"
-	"proxmox-vm-inventory/pkg/exporter"
+
+	//"github.com/cloudical-io/proxmox-vm-inventory/pkg/config"
+	"github.com/cloudical-io/proxmox-vm-inventory/pkg/exporter"
 
 	"github.com/charmbracelet/log"
 )
 
-func Run(address string) {
-	s := &http.Server{
-		Addr: address,
-	}
+// unused can be used later for advanced querries
+// returns a list of Proxmox Clusters being Scraped
+/*
+func clusterList(w http.ResponseWriter, r *http.Request) {
+	log.Info("Got HTTP request", "path", r.RequestURI, "origin", r.RemoteAddr, "method", r.Method)
+	l := config.ClusterList()
 
-	// default handler
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		log.Info("Got HTTP request", "path", r.RequestURI, "origin", r.RemoteAddr, "method", r.Method)
-		w.WriteHeader(http.StatusNotImplemented)
-		w.Write([]byte("Not Implemented"))
-	})
-
-	// endpoints
-	http.HandleFunc("/all", inventoryAll)
-	http.HandleFunc("/cluster", inventoryCluster)
-	http.HandleFunc("/cluster/", inventoryCluster)
-
-	if err := s.ListenAndServe(); err != nil {
-		log.Error("http serve error", "err", err)
+	// marshal the struct to JSON
+	if j, err := json.Marshal(l); err != nil {
+		log.Error("web.go", "err", err)
+		w.WriteHeader(http.StatusInternalServerError)
+	} else {
+		w.Header().Add("Content-Type", "application/json")
+		w.Write(j)
 	}
 }
+*/
 
 // retrieves the list of all environments
 func inventoryAll(w http.ResponseWriter, r *http.Request) {
@@ -48,7 +46,7 @@ func inventoryAll(w http.ResponseWriter, r *http.Request) {
 
 // get the list of an specific cluster
 //
-// reqiures you to POST formdata with the 'cluster' field set to the value for "cluster.apihost" you specified in your config.yaml
+// requires you to POST formdata with the 'cluster' field set to the value for "cluster.apihost" you specified in your config.yaml
 // returns JSON
 func inventoryCluster(w http.ResponseWriter, r *http.Request) {
 	log.Info("Got HTTP request", "path", r.RequestURI, "origin", r.RemoteAddr, "method", r.Method)
@@ -68,7 +66,7 @@ func inventoryCluster(w http.ResponseWriter, r *http.Request) {
 
 	// marshal the struct to JSON
 	if j, err := json.Marshal(l); err != nil {
-		log.Error("weg.go", "err", err)
+		log.Error("web.go", "err", err)
 		w.WriteHeader(http.StatusInternalServerError)
 	} else {
 		w.Header().Add("Content-Type", "application/json")

@@ -30,6 +30,7 @@ release:
           - "CHANGELOG.md"
       when: never
 
+
 # only builds on tag creation
 build binary:
   image: golang:1.20

@@ -26,13 +26,14 @@ type Vm struct {
 	Runningqemu    string        `json:"running-qemu,omitempty"`
 	Tags           string        `json:"tags,omitempty"`
 	Uptime         int           `json:"uptime,omitempty"`
-	Networks       networkConfig `json:"ipconfigs"`
+	Networks       NetworkConfig `json:"ipconfigs"`
 }
 
 // get vm list
 func getVMs(apiURL string, apiKey string, node string, timeout int) ([]Vm, error) {
 
-	r, err := request(apiURL, apiKey, fmt.Sprint(apiPrefix+"nodes/"+node+"/qemu"), timeout)
+	uri := fmt.Sprintf("%s/nodes/%s/qemu", apiPrefix, node)
+	r, err := request(apiURL, apiKey, uri, timeout)
 	if err != nil {
 		return nil, err
 	}

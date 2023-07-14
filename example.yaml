@@ -1,3 +1,5 @@
+# -- Log Level: DEBUG, INFO, WARN, ERROR, FATAL
+logLevel: "INFO"
 # -- listen address for the HTTP endpoint to listen on
 httpAddress: ":8080"
 # -- Timeout in seconds

@@ -11,49 +11,49 @@ import (
 )
 
 type Config struct {
-	RequestTimeout    int       `mapstructure:"timeout"`
-	FetchInterval     int       `mapstructure:"fetchInterval"`
-	HttpListenAddress string    `mapstructure:"httpAddress"`
-	LogLevel          string    `mapstructure:"logLevel"`
-	Clusters          []Cluster `mapstructure:"clusters"`
+	RequestTimeout    *int       `mapstructure:"timeout"`
+	FetchInterval     *int       `mapstructure:"fetchInterval"`
+	HttpListenAddress *string    `mapstructure:"httpAddress"`
+	LogLevel          *string    `mapstructure:"logLevel"`
+	Clusters          *[]Cluster `mapstructure:"clusters"`
 }
 
 type Cluster struct {
-	Name    string `mapstructure:"name"`
-	ApiKey  string `mapstructure:"apikey"`
-	ApiUser string `mapstructure:"apiuser"`
-	ApiHost string `mapstructure:"apihost"`
+	Name    string `mapstructure:"name" json:"name"`
+	ApiKey  string `mapstructure:"apikey" json:"apikey,omitempty"`
+	ApiUser string `mapstructure:"apiuser" json:"apiuser,omitempty"`
+	ApiHost string `mapstructure:"apihost" json:"apihost"`
 }
 
 // variables to be parsed
-var filePath string = *kingpin.
-	Flag("config-file", "YAML file containing your config values. Values set here override all commandline flags and environment vars").
+var filePath *string = kingpin.
+	Flag("config-file", "YAML file containing your config values. Values set here override all command line flags and environment vars").
 	Short('f').
 	Required().
 	Envar("INV_CONFIG_FILE").
 	String()
 
 var c *Config = &Config{
-	FetchInterval: *kingpin.
-		Flag("fetch-interval", "Interval at whicht to refetch all VMs").
+	FetchInterval: kingpin.
+		Flag("fetch-interval", "Interval at which to refetch all VMs").
 		Short('i').
 		Default("300").
 		Envar("INV_INTERVAL").
 		Int(),
-	RequestTimeout: *kingpin.
+	RequestTimeout: kingpin.
 		Flag("timeout", "Time in seconds before a request times out").
 		Short('t').
 		Default("10").
 		Envar("INV_TIMEOUT").
 		Int(),
-	HttpListenAddress: *kingpin.
+	HttpListenAddress: kingpin.
 		Flag("listen-address", "The http port to listen on").
 		HintOptions(":8080", "127.0.0.1:8080", "[::]:8080").
 		Default(":8080").
 		Short('l').
 		Envar("INV_HTTP_LISTEN").
 		String(),
-	LogLevel: *kingpin.
+	LogLevel: kingpin.
 		Flag("log-level", "Set the Log Level / verbosity").
 		Short('L').
 		Envar("INV_LOG_LEVEL").
@@ -61,21 +61,20 @@ var c *Config = &Config{
 		Enum("DEBUG", "INFO", "WARN", "ERROR", "FATAL"),
 }
 
-// parse values and set loglevel
-func init() {
-	kingpin.Parse()
-
-	// setting log level for library
-	level := log.ParseLevel(c.LogLevel)
-	log.SetLevel(level)
-	log.Info("Setting Log Level", "level", c.LogLevel)
-}
-
 // Creates a new Config file
 // reads commandline flags and parses them
 // any values in the provided yaml overwrite CLI flags
 func New() *Config {
-	f, err := os.Open(filePath)
+
+	kingpin.Parse()
+
+	// setting log level for library
+	level := log.ParseLevel(*c.LogLevel)
+	log.SetLevel(level)
+	log.Info("Dumping config", "conf", c, "path", filePath)
+	log.Info("Setting Log Level", "level", c.LogLevel)
+
+	f, err := os.Open(*filePath)
 	defer func(f *os.File) {
 		if err := f.Close(); err != nil {
 			log.Error("closing file failed", "err", err)
@@ -104,4 +103,17 @@ func New() *Config {
 	}
 
 	return c
+}
+
+func ClusterList() []Cluster {
+	l := make([]Cluster, len(*c.Clusters))
+
+	for i, v := range *c.Clusters {
+		l[i] = Cluster{
+			Name:    v.Name,
+			ApiHost: v.ApiHost,
+		}
+	}
+
+	return l
 }
