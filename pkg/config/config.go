@@ -71,8 +71,7 @@ func New() *Config {
 	// setting log level for library
 	level := log.ParseLevel(*c.LogLevel)
 	log.SetLevel(level)
-	log.Info("Dumping config", "conf", c, "path", filePath)
-	log.Info("Setting Log Level", "level", c.LogLevel)
+	log.Info("Setting Log Level", "level", *c.LogLevel)
 
 	f, err := os.Open(*filePath)
 	defer func(f *os.File) {
