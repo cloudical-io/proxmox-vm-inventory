@@ -17,7 +17,9 @@ type VmData struct {
 // get network config of a specific VM
 func getNetworks(apiURL string, apiKey string, node string, vmid string, timeout int) (NetworkConfig, error) {
 
-	r, err := request(apiURL, apiKey, fmt.Sprint(apiPrefix+"nodes/"+node+"/qemu/"+vmid+"/config"), timeout)
+	uri := fmt.Sprintf("%s/nodes/%s/qemu/%s/config", apiPrefix, node, vmid)
+	r, err := request(apiURL, apiKey, uri, timeout)
+	//r, err := request(apiURL, apiKey, fmt.Sprint(apiPrefix+"nodes/"+node+"/qemu/"+vmid+"/config"), timeout)
 	if err != nil {
 		return NetworkConfig{}, err
 	}
@@ -38,7 +40,7 @@ func getNetworks(apiURL string, apiKey string, node string, vmid string, timeout
 		}
 	}
 
-	log.Debug("network Devices found", "list", networkConfig)
+	log.Debug("network devices found", "list", networkConfig)
 
 	return networkConfig, nil
 }

@@ -58,7 +58,7 @@ func (i *Inventory) createInventory(c config.Cluster, timeout int) {
 
 	for _, v := range n.Data {
 		if r, err := getVMs(c.ApiHost, apiKey, v.Node, timeout); err != nil {
-			log.Warn("could not get nodes on node", "node", v.Node)
+			log.Warn("could not get VM's on node", "node", v.Node, "err", err)
 		} else {
 			list = append(list, r...)
 		}

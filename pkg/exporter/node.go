@@ -34,7 +34,8 @@ type Node struct {
 func getNodes(apiURL string, apiKey string, timeout int) (nodes, error) {
 
 	//get the nodes in cluster
-	r, err := request(apiURL, apiKey, fmt.Sprint(apiPrefix+"nodes"), timeout)
+	uri := fmt.Sprintf("%s/nodes", apiPrefix)
+	r, err := request(apiURL, apiKey, uri, timeout)
 	if err != nil {
 		return nodes{}, err
 	}

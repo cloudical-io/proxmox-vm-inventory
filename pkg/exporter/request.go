@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	apiPrefix string = "/api2/json/"
+	apiPrefix string = "/api2/json"
 )
 
 // general request handler
@@ -29,7 +29,7 @@ func request(url string, key string, path string, timeout int) ([]byte, error) {
 
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s%s", url, path), nil)
 	if err != nil {
-		return nil, fmt.Errorf("could not instanciate http-request %s", err)
+		return nil, fmt.Errorf("could not instantiate http-request %s", err)
 	}
 
 	// adding the Proxmox API Token to the request
@@ -38,7 +38,7 @@ func request(url string, key string, path string, timeout int) ([]byte, error) {
 
 	resp, err := client.Do(req)
 	if err != nil {
-		return nil, fmt.Errorf("proxmox API Response Mallformed %s", err)
+		return nil, fmt.Errorf("proxmox API response malformed %s", err)
 	}
 
 	if resp.StatusCode != http.StatusOK {
@@ -48,7 +48,7 @@ func request(url string, key string, path string, timeout int) ([]byte, error) {
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		log.Debug("Response", "response", resp.Body, "body", body)
-		return nil, fmt.Errorf("mallformed response body %s", err)
+		return nil, fmt.Errorf("malformed response body %s", err)
 	}
 
 	return body, nil
