@@ -1,3 +1,11 @@
+## [1.1.1-rc.1](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/compare/v1.1.0...v1.1.1-rc.1) (2023-07-14)
+
+
+### Bug Fixes
+
+* logging and ci stuff ([0dcae31](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/commit/0dcae319c635809e22df7f97ff0c454332e90218))
+* logging and ci stuff ([52c27d6](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/commit/52c27d6ef934e53be8cd8768e6d643f6d7d484c1))
+
 # [1.1.0](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/compare/v1.0.1...v1.1.0) (2023-07-14)
 
 
