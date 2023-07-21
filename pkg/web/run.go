@@ -23,6 +23,7 @@ func Run(address string) {
 	http.HandleFunc("/cluster", inventoryCluster)
 	http.HandleFunc("/cluster/", inventoryCluster)
 	http.HandleFunc("/html", serveContent)
+	http.HandleFunc("/html/sortable.js", serveSortableJS)
 
 	if err := s.ListenAndServe(); err != nil {
 		log.Error("http serve error", "err", err)

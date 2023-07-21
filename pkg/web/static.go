@@ -19,6 +19,9 @@ func serveContent(w http.ResponseWriter, r *http.Request) {
 		"joinNetworks": func(n exporter.NetworkConfig) string {
 			return strings.Join(n, ", ")
 		},
+		"add": func(x int, y int) int {
+			return x + y
+		},
 	})
 
 	t, err := t.Parse(table)
@@ -29,6 +32,14 @@ func serveContent(w http.ResponseWriter, r *http.Request) {
 
 	if err := t.Execute(w, l); err != nil {
 		log.Error("Failed Compiling Template", "err", err)
+		w.WriteHeader(http.StatusInternalServerError)
+	}
+}
+
+func serveSortableJS(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Content-Type", "text/javascript")
+	if _, err := w.Write([]byte(sortablejs)); err != nil {
+		log.Error("Could Not Serve File", "err", err)
 		w.WriteHeader(http.StatusInternalServerError)
 	}
 }
