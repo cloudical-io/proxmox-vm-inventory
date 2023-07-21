@@ -1,3 +1,13 @@
+# [1.2.0](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/compare/v1.1.1...v1.2.0) (2023-07-21)
+
+
+### Features
+
+* **web:** add collapsible item list ([76910b8](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/commit/76910b8461d6f211036ed898150455be79f4c00d))
+* **web:** add collapsible item list ([85fe158](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/commit/85fe158449fab4ddc208c0613c722dcc9fd99130))
+* **web:** add sortable table ([66ad4bc](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/commit/66ad4bc2bb066d9457eac9ca4bf9466701a88094))
+* **web:** add sortable table ([c4a5550](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/commit/c4a55505d61f314724296a3002f6a6647e0e6a0a))
+
 # [1.2.0-rc.2](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/compare/v1.2.0-rc.1...v1.2.0-rc.2) (2023-07-21)
 
 
