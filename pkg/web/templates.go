@@ -6,36 +6,65 @@ var table string = `
 
 <html>
     <head>
-        <style>
-            table {
-                font-family: arial, sans-serif;
-                border-collapse: collapse;
-                width: 100%;
-            }
+      <style>
+          table {
+              font-family: arial, sans-serif;
+              border-collapse: collapse;
+              width: 100%;
+          }
 
-            td, th {
-                border: 1px solid #dddddd;
-                text-align: left;
-                padding: 8px;
-            }
+          td, th {
+              border: 1px solid #dddddd;
+              text-align: left;
+              padding: 8px;
+          }
 
-            tr:nth-child(even) {
-                background-color: #dddddd;
-            }
+          tr:nth-child(even) {
+              background-color: #dddddd;
+          }
 
-            td:nth-child(4), th:nth-child(4){
-                min-width: auto;
-            }
+          td:nth-child(4), th:nth-child(4){
+              min-width: auto;
+          }
 
-            td, th{
-                min-width: max-content;
-            }
-        </style>
+          td, th{
+              min-width: max-content;
+          }
+
+          /* Style the button that is used to open and close the collapsible content */
+          .collapsible {
+            background-color: #eee;
+            color: #444;
+            cursor: pointer;
+            width: 100%;
+            border: none;
+            text-align: center;
+            outline: none;
+            padding: 1rem;
+          }
+          
+          /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+          .active, .collapsible:hover {
+            background-color: #ccc;
+          }
+          
+          /* Style the collapsible content. Note: hidden by default */
+          .content {
+            display: none;
+            overflow: hidden;
+          }
+      </style>
     </head>
     <body>
         {{ range $key, $value := . }}
-        <h3>Cluster: {{ $key }}</h3>
-        <table class="sortable">
+        
+        {{ $c := 0 }}
+        {{ range $value }}
+          {{ $c = add $c 1 }}
+        {{ end }}
+        <h3 class="collapsible">Cluster: {{ $key }} | VM Count: {{ $c }}</h3>
+        
+        <table class="sortable content">
             <tr>
                 <th>Name</th>
                 <th>Vmid</th>
@@ -72,6 +101,22 @@ var table string = `
             {{ end }}
         </table>
         {{ end }}
+        <script>
+          var coll = document.getElementsByClassName("collapsible");
+          var i;
+
+          for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+              this.classList.toggle("active");
+              var content = this.nextElementSibling;
+              if (content.style.display === "block") {
+                content.style.display = "none";
+              } else {
+                content.style.display = "block";
+              }
+            });
+          }
+        </script> 
     </body>
 </html>
 `

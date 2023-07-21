@@ -19,6 +19,9 @@ func serveContent(w http.ResponseWriter, r *http.Request) {
 		"joinNetworks": func(n exporter.NetworkConfig) string {
 			return strings.Join(n, ", ")
 		},
+		"add": func(x int, y int) int {
+			return x + y
+		},
 	})
 
 	t, err := t.Parse(table)
