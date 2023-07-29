@@ -1,3 +1,16 @@
+# [1.2.0-rc.3](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/compare/v1.2.0-rc.2...v1.2.0-rc.3) (2023-07-29)
+
+
+### Bug Fixes
+
+* typo in json struct ([7cf540a](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/commit/7cf540a7a5e4e0029dc1012ed2ff188193d411ed))
+
+
+### Features
+
+* **web:** add collapsible item list ([76910b8](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/commit/76910b8461d6f211036ed898150455be79f4c00d))
+* **web:** add sortable table ([66ad4bc](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/commit/66ad4bc2bb066d9457eac9ca4bf9466701a88094))
+
 # [1.2.0-rc.2](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/compare/v1.2.0-rc.1...v1.2.0-rc.2) (2023-07-21)
 
 
