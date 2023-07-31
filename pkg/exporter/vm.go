@@ -8,7 +8,7 @@ import (
 )
 
 type vms struct {
-	Data []Vm `jason:"data"`
+	Data []Vm `json:"data"`
 }
 
 type Vm struct {

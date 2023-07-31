@@ -70,6 +70,7 @@ func New() *Config {
 
 	// setting log level for library
 	level := log.ParseLevel(*c.LogLevel)
+	log.SetReportCaller(true)
 	log.SetLevel(level)
 	log.Info("Setting Log Level", "level", *c.LogLevel)
 
