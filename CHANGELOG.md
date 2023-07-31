@@ -1,3 +1,13 @@
+## [1.2.1](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/compare/v1.2.0...v1.2.1) (2023-07-31)
+
+
+### Bug Fixes
+
+* logging caller report ([00d8b15](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/commit/00d8b150726a4e1646e3b508a464ddcea52416c2))
+* logging caller report ([ba7a059](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/commit/ba7a059e21c3a443a1c2d63d0f07af0f5a479ee6))
+* typo in json struct ([389b6b8](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/commit/389b6b869e6632f2332a9858deb0b2dc9fb72531))
+* typo in json struct ([7cf540a](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/commit/7cf540a7a5e4e0029dc1012ed2ff188193d411ed))
+
 # [1.2.0](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/compare/v1.1.1...v1.2.0) (2023-07-21)
 
 
