@@ -1,3 +1,10 @@
+# [1.2.0-rc.4](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/compare/v1.2.0-rc.3...v1.2.0-rc.4) (2023-07-31)
+
+
+### Bug Fixes
+
+* logging caller report ([ba7a059](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/commit/ba7a059e21c3a443a1c2d63d0f07af0f5a479ee6))
+
 # [1.2.0-rc.3](https://gitlab.cloudical.net/operations/proxmox-vm-inventory/compare/v1.2.0-rc.2...v1.2.0-rc.3) (2023-07-29)
 
 
